@@ -1,0 +1,55 @@
+[package]
+name = "rust-app"
+version = "0.1.0"
+authors = ["sandip <sandip.dey1988@yahoo.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix = "0.13.0"
+actix-http = "3.3.1"
+actix-rt = "2.8.0"
+actix-service = "2.0.2"
+actix-web = "4.3.1"
+bcrypt = "0.15.0"
+chrono = {version = "0.4.26", features = ["serde"]}
+clap = "4.3.19"
+derive_more = "0.99.17"
+dotenv = "0"
+fancy-regex = "0.11.0"
+futures = "0.3.5"
+jsonwebtoken = "8.3.0"
+lazy_static = "1.4.0"
+lettre = "0.10.4"
+num_cpus="1.16.0"
+regex = "1.9.1"
+serde = {version = "1.0.181", features = ["derive"] }
+serde_json = "1.0.104"
+sqlx = {version = "0.7.1", features = [ "json", "postgres","chrono","macros"]}
+time = "0.3.25"
+axohtml = "0.5.0"
+validator = "0.16.1"
+validator_derive = "0.16.0"
+
+[profile.dev]
+opt-level = 0
+debug = true
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 16
+rpath = false
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
+lto = true
+panic = 'unwind'
+incremental = false
+codegen-units = 1
+rpath = false
