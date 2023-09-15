@@ -5,6 +5,8 @@ authors = ["sandip <sandip.dey1988@yahoo.com>"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[workspace]
+members = ["mock_actix_web"]
 
 [dependencies]
 actix = "0.13.0"
@@ -26,7 +28,7 @@ num_cpus="1.16.0"
 regex = "1.9.1"
 serde = {version = "1.0.181", features = ["derive"] }
 serde_json = "1.0.104"
-sqlx = {version = "0.7.1", features = [ "json", "postgres","chrono","macros"]}
+sqlx = {version = "0.7.1", features = [ "json", "postgres","chrono","macros", "runtime-tokio"]}
 time = "0.3.25"
 axohtml = "0.5.0"
 validator = "0.16.1"

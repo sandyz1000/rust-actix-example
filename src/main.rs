@@ -22,7 +22,7 @@ async fn main() -> std::io::Result<()> {
 
     let postgres_session = db::postgres::create_connection().await.unwrap();
 
-    HttpServer::new(|| {
+    HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(AppState {
                 db_postgres: postgres_session.clone(),

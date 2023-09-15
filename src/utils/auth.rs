@@ -22,7 +22,7 @@ pub struct Claims {
 }
 
 pub async fn new (id:i64,state:&Data<crate::AppState>)-> Result<String,ApiError>{
-    let now =chrono::Utc::now();
+    let now = chrono::Utc::now();
     let token = encode(&Header::default(), &Claims{
         id,
         exp: now.timestamp() + var("SESSION_LENGTH")?.parse::<i64>().unwrap(),

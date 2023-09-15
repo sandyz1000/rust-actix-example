@@ -1,4 +1,4 @@
-use actix_http::body::BoxBody;
+// use actix_http::body::BoxBody;
 use actix_service::{Service, Transform};
 use actix_web::{
     dev::{ServiceRequest, ServiceResponse},
@@ -25,14 +25,13 @@ pub struct Auth {
     pub classification: AuthType,
 }
 
-impl<S, B> Transform<S, ServiceRequest> for Auth
+impl<S> Transform<S, ServiceRequest> for Auth
 where
-    S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
+    S: Service<ServiceRequest, Response = ServiceResponse, Error = Error>,
     S::Future: 'static,
-    B: 'static,
 {
     // type Request = ServiceRequest;
-    type Response = ServiceResponse<B>;
+    type Response = ServiceResponse;
     type Error = Error;
     type InitError = ();
     type Transform = AuthMiddleware<S>;
@@ -51,14 +50,14 @@ pub struct AuthMiddleware<S> {
     classification: AuthType,
 }
 
-impl<S, B> Service<ServiceRequest> for AuthMiddleware<S>
+impl<S> Service<ServiceRequest> for AuthMiddleware<S>
 where
-    S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
+    S: Service<ServiceRequest, Response = ServiceResponse, Error = Error>,
     S::Future: 'static,
-    B: 'static,
+    // B: 'static,
 {
     // type Request = ServiceRequest;
-    type Response = ServiceResponse<B>;
+    type Response = ServiceResponse;
     type Error = Error;
     type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Self::Error>>>>;
 
@@ -73,7 +72,8 @@ where
 
                 if auth_cookie == None {
                     return Box::pin(async {
-                        Ok(req.error_response(ApiError::Unauthorized("not logged in".to_string())))
+                        let res = req.error_response(ApiError::Unauthorized("not logged in".to_string()));
+                        Ok(res)
                     });
                 }
 
@@ -91,7 +91,10 @@ where
                 });
 
                 if let Err(error) = decoded {
-                    return Box::pin(async { Ok(req.error_response(error)) });
+                    return Box::pin(async { 
+                        let res = req.error_response(error);
+                        Ok(res) 
+                    });
                 }
 
                 req.extensions_mut().insert::<JsonValue>(
@@ -102,11 +105,10 @@ where
                 if let Some(key) = req.headers().get("x-api-key") {
                     if key.to_str().unwrap() != var("API_KEY").unwrap() {
                         return Box::pin(async {
-                            Ok(
-                                req.error_response(ApiError::Unauthorized(
-                                    "wrong auth".to_string(),
-                                )),
-                            )
+                            let res = req.error_response(ApiError::Unauthorized(
+                                "wrong auth".to_string(),
+                            ));
+                            Ok(res)
                         });
                     }
                 } else {

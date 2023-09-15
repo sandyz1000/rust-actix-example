@@ -1,0 +1,15 @@
+[package]
+name = "actix-example"
+version = "0.1.0"
+authors = ["Ana Bujan <ana@eisberg-labs.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.4.0"
+actix = "0.13.1"
+actix_derive = "0.6.1"
+
+[dev-dependencies]
+actix-rt = "2.9.0"

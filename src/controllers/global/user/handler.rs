@@ -92,7 +92,7 @@ pub async fn sign_up(
         ",
         &body.email,
         &body.phone_number,
-        hash(&body.password, 6)?,
+        bcrypt::hash(&body.password, 6)?,
         body.name.clone().unwrap(),
         chrono::Utc::now()
     )
