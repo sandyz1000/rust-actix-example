@@ -66,7 +66,8 @@ pub async fn sign_up(
 ) -> Result<Json<Message>, ApiError> {
     validate_input(&body)?;
 
-    let data_user_exist = query!("SELECT id FROM users WHERE email = $1;", &body.email)
+    let data_user_exist = 
+        query!("SELECT id FROM users WHERE email = $1;", &body.email)
         .fetch_one(&state.db_postgres)
         .await;
 

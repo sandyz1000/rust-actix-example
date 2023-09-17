@@ -1,11 +1,13 @@
+#![allow(unused)]
 use clap::{arg, Command};
 
 use dotenv::from_filename;
 
-
 pub fn read_cli(){
+    // TODO: Fix here
     let app = Command::new("rust-app")
     .arg(arg!("environment")
+            .required(false)
             .short('e')
             .long("env")
             .value_name("ENV_NAME")

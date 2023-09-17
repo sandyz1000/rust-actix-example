@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpServer};
+use dotenv::from_filename;
 
 mod assets;
 mod controllers;
@@ -18,7 +19,8 @@ pub struct AppState {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-    utils::cli::read_cli();
+    // utils::cli::read_cli();
+    from_filename(".env.development").expect("load env error");
 
     let postgres_session = db::postgres::create_connection().await.unwrap();
 

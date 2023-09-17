@@ -1,0 +1,7 @@
+A request handler will have extractor 
+- Data - For accessing pieces of application state.
+- HttpRequest - HttpRequest is itself an extractor, in case you need access to other parts of the request.
+- String - You can convert a request's payload to a String. An example is available in the rustdoc.
+- Bytes - You can convert a request's payload into Bytes. An example is available in the rustdoc.
+- Payload - Low-level payload extractor primarily for building other extractors. An example is available in the rustdoc.
+

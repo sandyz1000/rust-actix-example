@@ -15,13 +15,10 @@ pub struct Message {
 }
 
 pub fn get_data_from_middleware(req: &HttpRequest) -> Result<JsonValue, ApiError> {
-    let headers = req.head().headers();
-    if let Some(header_value) = headers.get("your_header_name") {
-        if let Ok(header_value_str) = header_value.to_str() {
-            if let Ok(json_value) = serde_json::from_str(header_value_str) {
-                return Ok(json_value);
-            }
-        }
+    // TODO: Verify this Fix
+    if let Some(id) = req.headers().get("id") {
+        let json_value = serde_json::from_str(&format!("{{ \"id\":{:?} }}", id)).unwrap();
+        return Ok(json_value);
     }
     Err(ApiError::NotFound("Header not found".to_string()))
 }

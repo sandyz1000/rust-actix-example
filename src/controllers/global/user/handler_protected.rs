@@ -54,11 +54,11 @@ pub async fn update_profile(
             .map(|x| -> u32 { x.parse::<u32>().unwrap() })
             .collect();
 
-        Some(chrono::naive::NaiveDate::from_ymd(
+        chrono::naive::NaiveDate::from_ymd_opt(
             splitted[0] as i32,
             splitted[1],
             splitted[2],
-        ))
+        )
     } else {
         None
     };

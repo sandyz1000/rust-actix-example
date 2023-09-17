@@ -65,7 +65,7 @@ pub async fn create(
         &body.phone_number,
         hash(&body.password, 6)?,
         body.name.clone().unwrap(),
-        chrono::naive::NaiveDate::from_ymd(
+        chrono::naive::NaiveDate::from_ymd_opt(
             dob_splitted[0] as i32,
             dob_splitted[1],
             dob_splitted[2]
